@@ -4,10 +4,10 @@ import sys
 
 class morse:
     def __init__(self):
-        self.pinP = 11
+        self.ausgang = 11
 
         GPIO.setmode(GPIO.BOARD)
-        GPIO.setup(self.pinP, GPIO.OUT)
+        GPIO.setup(self.ausgang, GPIO.OUT)
 
         self.buchstaben = {'a': {0: 0.25, 1: 0.75}, 'b': {0: 0.75, 1: 0.25, 2: 0.25, 3: 0.25},
                            'c': {0: 0.75, 1: 0.25, 2: 0.75, 3: 0.25},
@@ -47,35 +47,45 @@ class morse:
                            '7': {0: 0.75, 1: 0.75, 2: 0.25, 3: 0.25, 4: 0.25},
                            '8': {0: 0.75, 1: 0.75, 2: 0.75, 3: 0.25, 4: 0.25},
                            '9': {0: 0.75, 1: 0.75, 2: 0.75, 3: 0.75, 4: 0.25},
-                           '0': {0: 0.75, 1: 0.75, 2: 0.75, 3: 0.75, 4: 0.75}}
+                           '0': {0: 0.75, 1: 0.75, 2: 0.75, 3: 0.75, 4: 0.75},
+                           ':': {0: 0.75, 1: 0.75, 2: 0.75, 3: 0.25, 4: 0.25, 5: 0.25},
+                           '-': {0: 0.75, 1: 0.25, 2: 0.25, 3: 0.25, 4: 0.25, 5: 0.75},
+                           'ß': {0: 0.25, 1: 0.25, 2: 0.25, 3: 0.75, 4: 0.75, 5: 0.25, 6: 0.25}}
 
     def main(self):
         while True:
-            GPIO.output(self.pinP,1)
+            GPIO.output(self.ausgang,1)
             sl(0.1)
-            GPIO.output(self.pinP,0)
+            GPIO.output(self.ausgang,0)
             sl(0.1)
 
     def buchstabe(self,buchstabe):
         for i in self.buchstaben[buchstabe]:
-            GPIO.output(self.pinP,1)
+            GPIO.output(self.ausgang,1)
             sl(self.buchstaben[buchstabe][i])
-            GPIO.output(self.pinP,0)
+            GPIO.output(self.ausgang,0)
             sl(0.25)
 
 if __name__ == '__main__':
     try:
+        print('Hello')
         morse = morse()
         while True:
-            a = input('Zeichen: ')
-            if a == 'exit':
+            zeichen = input('Zeichen: ')
+            if zeichen == 'exit':
                 GPIO.cleanup()
+                print('Goodbye!')
                 sys.exit(0)
             else:
-                assert a in ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S',
-                             'T', 'Q', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
-                             'm', 'n', 'Oo', 'p', 'q', 'r', 's', 't', 'q', 'v', 'w', 'x', 'y', 'z', '1', '2', '3', '4', '5',
-                             '6', '7', '8', '9', '0']
-                morse.buchstabe(a)
+                for buchstabe in zeichen:
+                    if buchstabe == " ":
+                        sl(1)
+                    else:
+                        print(buchstabe)
+                        assert buchstabe in ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q',
+                                     'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
+                                     'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y',
+                                     'z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ':', '-', 'ß']
+                        morse.buchstabe(buchstabe)
     except KeyboardInterrupt:
         GPIO.cleanup()
