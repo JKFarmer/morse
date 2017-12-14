@@ -52,14 +52,14 @@ class morse:
                            '-': {0: 0.75, 1: 0.25, 2: 0.25, 3: 0.25, 4: 0.25, 5: 0.75},
                            'ß': {0: 0.25, 1: 0.25, 2: 0.25, 3: 0.75, 4: 0.75, 5: 0.25, 6: 0.25}}
 
-    def main(self):
+    def test(self):
         while True:
             GPIO.output(self.ausgang,1)
             sl(0.1)
             GPIO.output(self.ausgang,0)
             sl(0.1)
 
-    def buchstabe(self,buchstabe):
+    def ton_ausgabe(self,buchstabe):
         for i in self.buchstaben[buchstabe]:
             GPIO.output(self.ausgang,1)
             sl(self.buchstaben[buchstabe][i])
@@ -86,6 +86,6 @@ if __name__ == '__main__':
                                      'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
                                      'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y',
                                      'z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ':', '-', 'ß']
-                        morse.buchstabe(buchstabe)
+                        morse.ton_ausgabe(buchstabe)
     except KeyboardInterrupt:
         GPIO.cleanup()
