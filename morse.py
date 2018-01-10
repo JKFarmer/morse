@@ -54,4 +54,4 @@ if __name__ == '__main__':
 
     except AssertionError:
         print('Zeichen nicht verfügbar!')
-        mc.encode()
+        morsecode().encode()
