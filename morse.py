@@ -10,8 +10,8 @@ class morsecode:
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(self.ausgang, GPIO.OUT)
 
-    def test(self):
-        while True:
+    def test(self, range_i):
+        for i in range(range_i):
             GPIO.output(self.ausgang,1)
             sleep(0.1)
             GPIO.output(self.ausgang,0)
