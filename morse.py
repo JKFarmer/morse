@@ -1,7 +1,7 @@
 import RPi.GPIO as GPIO
 from time import sleep
 import sys
-from morse.morselib import code, test
+from morselib import code, test
 
 class morsecode:
     def __init__(self):
