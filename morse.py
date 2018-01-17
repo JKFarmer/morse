@@ -53,5 +53,5 @@ if __name__ == '__main__':
         GPIO.cleanup()
 
     except AssertionError:
-        print('Zeichen nicht verfügbar!')
+        print('Zeichen nicht verfügbar! Try again.')
         morsecode().encode()
