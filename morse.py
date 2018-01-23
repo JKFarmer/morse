@@ -3,12 +3,14 @@ from time import sleep
 import sys
 from morselib import code, test
 
-class morsecode:
+class Morsecode:
     def __init__(self):
         self.ausgang = 11
 
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(self.ausgang, GPIO.OUT)
+
+        self.dit = 0.06
 
     def test(self, range_i):
         for i in range(range_i):
@@ -20,7 +22,7 @@ class morsecode:
     def ton_ausgabe(self, buchstabe):
         for i in code()[buchstabe]:
             GPIO.output(self.ausgang,1)
-            self.sleep = sleep(code()[buchstabe][i])
+            sleep(code()[buchstabe][i]*self.dit)
             GPIO.output(self.ausgang,0)
             sleep(0.06)
         sleep(0.12)
@@ -45,7 +47,7 @@ class morsecode:
 if __name__ == '__main__':
     try:
         print('Hello')
-        mc = morsecode()
+        mc = Morsecode()
         mc.encode()
 
     except KeyboardInterrupt:
@@ -54,4 +56,4 @@ if __name__ == '__main__':
 
     except AssertionError:
         print('Zeichen nicht verfügbar! Try again.')
-        morsecode().encode()
+        Morsecode().encode()
